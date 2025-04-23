@@ -25,5 +25,17 @@ public class BudgetItemService {
     public BudgetItem findById(Long id) {
         return repo.findById(id).orElseThrow(() -> new RuntimeException("Item not found"));
     }
+    public BudgetItem update(Long id, BudgetItem newItem) {
+        BudgetItem existing = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+
+        existing.setDescription(newItem.getDescription());
+        existing.setAmount(newItem.getAmount());
+        existing.setCategory(newItem.getCategory());
+        existing.setDate(newItem.getDate());
+
+        return repo.save(existing);
+    }
+
 
 }

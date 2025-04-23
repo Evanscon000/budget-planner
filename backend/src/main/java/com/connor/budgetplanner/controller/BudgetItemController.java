@@ -32,6 +32,11 @@ public class BudgetItemController {
         BudgetItem item = service.findById(id);
         return ResponseEntity.ok(item);
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<BudgetItem> update(@PathVariable Long id, @RequestBody BudgetItem item) {
+        BudgetItem updated = service.update(id, item);
+        return ResponseEntity.ok(updated);
+    }
 
 
 }

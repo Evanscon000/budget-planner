@@ -17,8 +17,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -71,6 +70,19 @@ class BudgetItemControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.description").value("Gym"));
     }
+    @Test
+    void updatesBudgetItem() throws Exception {
+        BudgetItem updated = new BudgetItem("Groceries", 75.0, "Food", Instant.now());
+
+        when(service.update(eq(1L), any(BudgetItem.class))).thenReturn(updated);
+
+        mockMvc.perform(put("/budget-items/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(updated)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.amount").value(75.0));
+    }
+
 
 
 }

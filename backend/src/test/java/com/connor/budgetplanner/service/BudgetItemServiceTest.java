@@ -62,5 +62,20 @@ class BudgetItemServiceTest {
         assertThat(result).isSameAs(item);
         verify(repo).findById(1L);
     }
+    @Test
+    void updatesExistingBudgetItem() {
+        BudgetItem original = new BudgetItem("Gas", 40.0, "Transport", Instant.now());
+        BudgetItem updated = new BudgetItem("Gas", 50.0, "Transport", Instant.now());
+
+        when(repo.findById(1L)).thenReturn(Optional.of(original));
+        when(repo.save(any(BudgetItem.class))).thenReturn(updated);
+
+        BudgetItem result = service.update(1L, updated);
+
+        assertThat(result.getAmount()).isEqualTo(50.0);
+        verify(repo).findById(1L);
+        verify(repo).save(any(BudgetItem.class));
+    }
+
 
 }
