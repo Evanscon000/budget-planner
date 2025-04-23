@@ -37,6 +37,11 @@ public class BudgetItemController {
         BudgetItem updated = service.update(id, item);
         return ResponseEntity.ok(updated);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 
 
 }

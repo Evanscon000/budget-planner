@@ -82,6 +82,13 @@ class BudgetItemControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.amount").value(75.0));
     }
+    @Test
+    void deletesBudgetItem() throws Exception {
+        doNothing().when(service).delete(1L);
+
+        mockMvc.perform(delete("/budget-items/1"))
+                .andExpect(status().isNoContent());
+    }
 
 
 

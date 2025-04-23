@@ -76,6 +76,17 @@ class BudgetItemServiceTest {
         verify(repo).findById(1L);
         verify(repo).save(any(BudgetItem.class));
     }
+    @Test
+    void deletesBudgetItemById() {
+        Long id = 1L;
+
+        doNothing().when(repo).deleteById(id);
+
+        service.delete(id);
+
+        verify(repo).deleteById(id);
+    }
+
 
 
 }

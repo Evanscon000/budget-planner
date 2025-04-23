@@ -36,6 +36,9 @@ public class BudgetItemService {
 
         return repo.save(existing);
     }
+    public void delete(Long id) {
+        repo.deleteById(id);
+    }
 
 
 }
