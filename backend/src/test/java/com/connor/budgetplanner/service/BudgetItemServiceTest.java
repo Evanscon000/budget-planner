@@ -2,31 +2,35 @@ package com.connor.budgetplanner.service;
 
 import com.connor.budgetplanner.entity.BudgetItem;
 import com.connor.budgetplanner.repository.BudgetItemRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import static org.mockito.Mockito.*;
 
 import java.time.Instant;
 
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(MockitoExtension.class)
 class BudgetItemServiceTest {
 
-    @Mock  BudgetItemRepository repo;
-    @InjectMocks BudgetItemService service;
+    @Mock
+    BudgetItemRepository repo;
+
+    @InjectMocks
+    BudgetItemService service;
 
     @Test
-    void savesEntity() {
-        BudgetItem item = new BudgetItem("Gas", 40, "Transport", Instant.now());
+    void savesBudgetItem() {
+        BudgetItem item = new BudgetItem("Groceries", 55.0, "Food", Instant.now());
         when(repo.save(item)).thenReturn(item);
 
-        BudgetItem saved = service.create(item);
+        BudgetItem result = service.create(item);
 
-        Assertions.assertThat(saved).isSameAs(item);
+        assertThat(result).isSameAs(item);
         verify(repo).save(item);
     }
 }

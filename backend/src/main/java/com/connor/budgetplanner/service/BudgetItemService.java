@@ -4,8 +4,6 @@ import com.connor.budgetplanner.entity.BudgetItem;
 import com.connor.budgetplanner.repository.BudgetItemRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class BudgetItemService {
 
@@ -17,9 +15,5 @@ public class BudgetItemService {
 
     public BudgetItem create(BudgetItem item) {
         return repo.save(item);
-    }
-
-    public List<BudgetItem> findAll() {
-        return repo.findAll();
     }
 }
