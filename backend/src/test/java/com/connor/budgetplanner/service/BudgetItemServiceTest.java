@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.Mockito.*;
 
 import java.time.Instant;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,5 +33,22 @@ class BudgetItemServiceTest {
 
         assertThat(result).isSameAs(item);
         verify(repo).save(item);
+    }
+
+    @Test
+    void returnsAllBudgetItems() {
+        List<BudgetItem> stubItems = List.of(
+                new BudgetItem("Rent", 1000.0, "Housing", Instant.now()),
+                new BudgetItem("Gas", 50.0, "Transport", Instant.now())
+        );
+
+        when(repo.findAll()).thenReturn(stubItems);
+
+        List<BudgetItem> result = service.findAll();
+
+        assertThat(result).hasSize(2);
+        assertThat(result.get(0).getDescription()).isEqualTo("Rent");
+        verify(repo).findAll();
+
     }
 }

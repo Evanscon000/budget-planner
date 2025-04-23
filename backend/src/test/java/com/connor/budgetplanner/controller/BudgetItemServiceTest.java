@@ -12,11 +12,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.Instant;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class BudgetItemControllerTest {
@@ -45,4 +48,19 @@ class BudgetItemControllerTest {
                         .content(mapper.writeValueAsString(item)))
                 .andExpect(status().isCreated());
     }
+
+    @Test
+    void getsAllBudgetItems() throws Exception {
+        List<BudgetItem> stubItems = List.of(
+                new BudgetItem("Rent", 1000.0, "Housing", Instant.now()),
+                new BudgetItem("Gas", 50.0, "Transport", Instant.now())
+        );
+
+        when(service.findAll()).thenReturn(stubItems);
+
+        mockMvc.perform(get("/budget-items"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2));
+    }
+
 }
