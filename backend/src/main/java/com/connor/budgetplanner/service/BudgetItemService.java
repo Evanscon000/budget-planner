@@ -22,4 +22,8 @@ public class BudgetItemService {
     public List<BudgetItem> findAll() {
         return repo.findAll();
     }
+    public BudgetItem findById(Long id) {
+        return repo.findById(id).orElseThrow(() -> new RuntimeException("Item not found"));
+    }
+
 }

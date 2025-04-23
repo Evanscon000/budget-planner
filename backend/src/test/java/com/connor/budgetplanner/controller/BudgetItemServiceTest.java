@@ -62,5 +62,15 @@ class BudgetItemControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2));
     }
+    @Test
+    void getsBudgetItemById() throws Exception {
+        BudgetItem item = new BudgetItem("Gym", 30.0, "Health", Instant.now());
+        when(service.findById(1L)).thenReturn(item);
+
+        mockMvc.perform(get("/budget-items/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.description").value("Gym"));
+    }
+
 
 }

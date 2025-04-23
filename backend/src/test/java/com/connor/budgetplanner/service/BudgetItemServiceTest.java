@@ -10,6 +10,7 @@ import static org.mockito.Mockito.*;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -51,4 +52,15 @@ class BudgetItemServiceTest {
         verify(repo).findAll();
 
     }
+    @Test
+    void returnsBudgetItemById() {
+        BudgetItem item = new BudgetItem("Groceries", 45.0, "Food", Instant.now());
+        when(repo.findById(1L)).thenReturn(Optional.of(item));
+
+        BudgetItem result = service.findById(1L);
+
+        assertThat(result).isSameAs(item);
+        verify(repo).findById(1L);
+    }
+
 }

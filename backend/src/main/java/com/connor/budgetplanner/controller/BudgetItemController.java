@@ -27,5 +27,11 @@ public class BudgetItemController {
         List<BudgetItem> items = service.findAll();
         return ResponseEntity.ok(items);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<BudgetItem> findById(@PathVariable Long id) {
+        BudgetItem item = service.findById(id);
+        return ResponseEntity.ok(item);
+    }
+
 
 }
